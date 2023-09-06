@@ -1,0 +1,106 @@
+// syntax: th:
+	vd: truyen du lieu tu bien name trong java vao 1 the h1 trong html
+		<h1 th:text="${name}"></h1>
+		
+
+// model and view trong spring boot
+	+ Model: là đối tượng lưu giữ thông tin và được sử dụng bởi Template Engine để generate ra webpage. Có thể hiểu nó là 
+	Context của Thymeleaf
+	
+	+ Model: luu tru thong tin duoi dang key-value
+	
+	+Thymeleaf Standard Expression
+		1) ${...} : Gia tri cua 1 bien
+		2) *{...} : Gia tri cua 1 bien cho truoc boi th:object
+		3) #{...} : Lay message
+		4) @{...} : Lay duong dan url dua theo context server
+		
+	eg:
+	<div th:object="${session.user}">
+	    <!-- th:object tồn tại trong phạm vi của thẻ div này -->
+	
+	    <!-- Lấy ra tên của đối tượng session.user -->
+	    <p>Name: <span th:text="*{firstName}"></span>.</p> 
+	    
+	    <!-- Lấy ra lastName của đối tượng session.user -->
+	    <p>Surname: <span th:text="*{lastName}"></span>.</p>
+	    
+	    <!-- Lấy ra tên của đối tượng session.user su dung ${..} -->
+	    <p>Name: <span th:text="${session.user.firstName}"></span>.</p>
+  	</div>
+  	
+  	
+// th:fragment để định nghĩa một mảnh HTML cần tái sử dụng nhiều lần
+	eg: th:fragment="header(title)" : truyền title vào fragment có tên là header.
+	
+// th:insert để chèn một mảnh HTML định nghĩa trước đó vào trong thẻ hiện tại
+// th:replace để thay thế một mảnh HTML định nghĩa trước đó cho thẻ hiện tại
+
+// 2.5 Điều kiện th:if, th:unless
+
+
+// Hiện thị list box 
+th:each để duyệt mảng, 
+th:text để hiển thị mô tả từng dòng của list box, 
+th:value thể hiện giá trị của dòng, 
+th:selected đánh dấu dòng nào được người dùng chọn
+
+
+// form
++ th:action là một thuộc tính trong Thymeleaf, một công cụ mô phỏng HTML và XML trên Java. Thuộc tính này được sử dụng để 
+chỉ định hành động (action) mà form sẽ gửi dữ liệu khi người dùng nhấn nút submit.
+Ví dụ:
+
+	html
+	<form th:action="@{/submit}" method="post">
+	    <!-- Các trường dữ liệu và các nút submit -->
+	</form>
+	=> Trong ví dụ trên, th:action được sử dụng để xác định đường dẫn /submit là đích mà form sẽ gửi dữ liệu tới khi người 
+	dùng nhấn nút submit. Thuộc tính method="post" xác định phương thức HTTP sử dụng để gửi dữ liệu (ở đây là POST).
+	
++ th:object khai báo đối tượng chứa dữ liệu các trường để điền vào form.
+
++ th:field lấy dữ liệu trong từng thuộc tính của đối tượng đổ vào một trường text.
+
+// @ModelAttribute là một cách bổ sung, nó giúp bind tham số hoặc kết quả trả về của một phương thức thành một model 
+attribute dưới tên được chỉ định.
+// @ModelAttribution có thể được sử dụng làm đối số/tham số của method hoặc trước khi khai báo method. Mục tiêu chính của 
+annotation này để liên kết các tham số yêu cầu hoặc các trường form với một đối tượng mô hình.
+
+// Khi một Request được gửi lên từ client, Spring Boot sẽ kiểm tra các tham số của phương thức handler trong controller. 
+Nếu có một tham số được đánh dấu bằng @ModelAttribute, Spring Boot sẽ cố gắng ánh xạ các thuộc tính của request với các 
+thuộc tính của đối tượng được định nghĩa bởi @ModelAttribute. Sau đó, đối tượng ModelAttribute này sẽ được tự động thêm vào 
+Model object và có sẵn cho việc sử dụng trong views của ứng dụng.
+
+	eg:
+	@Controller
+	public class MyController {
+
+	    @GetMapping("/example")
+	    public String example(@ModelAttribute("person") Person person) {
+	        // Code xử lý
+	        return "example-view";
+	    }
+	}
+	Trong ví dụ trên, khi một request được gửi đến URL "/example", Spring Boot sẽ tạo ra một đối tượng Person và ánh xạ các 
+	thuộc tính của request vào thuộc tính tương ứng trong đối tượng Person (với điều kiện thuộc tính trong đối tượng Person 
+	có tên giống với các thuộc tính trong request). Sau đó, đối tượng Person này sẽ được tự động thêm vào Model object và 
+	có sẵn cho việc sử dụng trong view "example-view".
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
